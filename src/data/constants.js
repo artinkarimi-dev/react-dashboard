@@ -1,0 +1,1 @@
+export const AVATAR_URL = "./src/assets/images/Profile.jpg"
