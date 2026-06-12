@@ -7,6 +7,7 @@ import ProductGridView from "../../features/ProductsView/ProductGridView";
 
 function Products() {
   const [layoutType, setLayoutType] = useState("TABLE");
+  const [paginatedProducts, setPaginatedProducts] = useState([...products]);
 
   const Buttons = (
     <>
@@ -54,7 +55,11 @@ function Products() {
 
       <section>
         {layoutType === "TABLE" ? (
-          <ProductTableView products={products} />
+          <ProductTableView
+            products={products}
+            paginatedProducts={paginatedProducts}
+            setProducts={setPaginatedProducts}
+          />
         ) : (
           <ProductGridView products={products} />
         )}

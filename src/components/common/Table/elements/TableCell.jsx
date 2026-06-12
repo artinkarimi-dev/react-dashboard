@@ -1,5 +1,7 @@
-function TableCell({ children }) {
-  return <div className="text-sm text-gray-800">{children}</div>;
+import clsx from "clsx";
+
+function TableCell({ children , className }) {
+  return <div className={clsx(className , "line-clamp-1")}>{children}</div>;
 }
 
 export default TableCell;

@@ -25,12 +25,15 @@ function Home() {
         className="
           font-sans
           bg-gradient-to-b from-green-400 to-green-800
-          text-white px-4 py-2 rounded-md
+          text-white px-4 py-2 sm:px-5 sm:py-2.5
+          rounded-md
           hover:from-green-800 hover:to-green-400
           transition duration-300 ease-in-out
-          flex items-center gap-2
+          flex items-center justify-center gap-2
           disabled:opacity-70
           cursor-pointer
+          text-sm sm:text-base
+          w-full sm:w-auto
         "
         onClick={clickHandler}
       >
@@ -48,14 +51,18 @@ function Home() {
 
   return (
     <>
-      <SectionTitle title="Dashboard" Buttons={<CTAButton />} />
+      <div className="flex flex-col gap-4 sm:gap-6">
+        <SectionTitle title="Dashboard" Buttons={<CTAButton />} />
 
-      <Summaries />
+        <div className="w-full">
+          <Summaries />
+        </div>
 
-      <div>
-        <DetailsCharts />
-        <ProductsTable />
-        <QuickOverview />
+        <div className="flex flex-col gap-4 sm:gap-6">
+          <DetailsCharts />
+          <ProductsTable />
+          <QuickOverview />
+        </div>
       </div>
     </>
   );

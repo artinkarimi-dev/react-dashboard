@@ -8,8 +8,18 @@ function LastUsers() {
   const recentUsers = users.slice(-6);
 
   return (
-    <div className="w-full bg-gradient-to-br from-gray-50 via-white to-gray-50 rounded-3xl shadow-xl border border-gray-200/50 overflow-hidden">
-      <div className="p-4 sm:p-6 lg:p-5 xl:p-6">
+    <div
+      className="
+        w-full
+        bg-gradient-to-br from-gray-50 via-white to-gray-50
+        rounded-2xl sm:rounded-3xl
+        shadow-lg sm:shadow-xl
+        border border-gray-200/50
+        overflow-hidden
+        transition-all duration-300
+      "
+    >
+      <div className="p-4 sm:p-5 xl:p-6">
         <OpenInPage
           itemsLength={users.length}
           navigateTo="/users"
@@ -17,7 +27,7 @@ function LastUsers() {
           description="Recently joined users"
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 xl:gap-4">
           {recentUsers.map((user, index) => (
             <UserCard key={user.id} user={user} index={index} />
           ))}
