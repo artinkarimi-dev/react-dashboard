@@ -156,31 +156,66 @@ function ProductTableView({ products, setProducts, paginatedProducts }) {
                   </div>
 
                   <div className="mt-2 flex items-center gap-3">
-                    <span className="text-sm font-bold text-gray-900">
-                      {new Intl.NumberFormat("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0,
-                      }).format(product.price)}
-                    </span>
-                    <span className="text-xs text-gray-400">
-                      Stock:{" "}
-                      <span
+                    {/* Premium Price Tooltip */}
+                    <div className="relative group">
+                      <div className="flex items-center gap-1">
+                        <span className="text-sm font-bold text-gray-900 cursor-help border-b border-dashed border-gray-300 pb-0.5 transition-all duration-200 group-hover:border-indigo-400 group-hover:text-indigo-600">
+                          {new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0,
+                          }).format(product.price)}
+                        </span>
+                      </div>
+
+                      {/* Ultra-sleek Tooltip */}
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-out z-50 pointer-events-none">
+                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-white border-l border-t border-gray-200"></div>
+                        <div className="bg-white border border-gray-200 text-gray-700 text-xs font-medium rounded-lg px-3 py-2 shadow-xl whitespace-nowrap">
+                          <div className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                            <span className="text-gray-500">Precise value</span>
+                            <span className="text-gray-300">|</span>
+                            <span className="font-mono font-semibold text-gray-900">
+                              {new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              }).format(product.price)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Stock with Dot Indicator */}
+                    <div className="flex items-center gap-1.5">
+                      <div
                         className={clsx(
-                          "font-semibold",
+                          "w-1.5 h-1.5 rounded-full",
                           product.stock > 50
-                            ? "text-gray-600"
+                            ? "bg-emerald-500"
                             : product.stock > 10
-                              ? "text-amber-500"
-                              : "text-red-500",
+                              ? "bg-amber-500"
+                              : "bg-rose-500",
                         )}
-                      >
-                        {product.stock}
+                      />
+                      <span className="text-xs text-gray-500">
+                        Stock:{" "}
+                        <span className="font-semibold text-gray-700">
+                          {product.stock}
+                        </span>
                       </span>
-                    </span>
-                    <span className="text-xs font-mono text-gray-300">
-                      #{product.id}
+                    </div>
+
+                    {/* Divider */}
+                    <span className="text-gray-300 text-xs">•</span>
+
+                    {/* Product Reference */}
+                    <span className="text-xs font-mono text-gray-400">
+                      ID: {product.id}
                     </span>
                   </div>
 

@@ -4,10 +4,26 @@ import { products } from "../../data/products";
 import SectionTitle from "../../components/common/SectionTitle";
 import ProductTableView from "../../features/ProductsView/ProductTableView";
 import ProductGridView from "../../features/ProductsView/ProductGridView";
+import AddProductFields from "../../features/ProductsTable/components/AddProductFields";
+import Modal from "../../components/common/Modal";
 
 function Products() {
   const [layoutType, setLayoutType] = useState("TABLE");
   const [paginatedProducts, setPaginatedProducts] = useState([...products]);
+  const [newProduct, setNewProduct] = useState({
+    id: 51,
+    title: "",
+    description: "",
+    price: "",
+    img: "/products/iphone.png",
+    isPublished: false,
+    stock: "",
+  });
+
+  const createNewProduct = () => {
+    const newId = Math.max(...products.map((p) => p.id)) + 1;
+    products.push({ ...newProduct, id: newId });
+  };
 
   const Buttons = (
     <>
@@ -34,8 +50,11 @@ function Products() {
         )}
       </button>
 
-      <button
-        className="font-sans
+      <Modal
+        title="Create a new product"
+        Trigger={
+          <button
+            className="font-sans
             bg-gradient-to-b from-green-400 to-green-800
             text-white px-4 py-2 rounded-md
             hover:from-green-800 hover:to-green-400
@@ -43,9 +62,14 @@ function Products() {
             flex items-center gap-2
             w-full sm:w-auto justify-center
             cursor-pointer"
+          >
+            Product creation
+          </button>
+        }
+        onSubmit={createNewProduct}
       >
-        Product creation
-      </button>
+        <AddProductFields newProduct={newProduct} onChange={setNewProduct} />
+      </Modal>
     </>
   );
 
@@ -61,7 +85,11 @@ function Products() {
             setProducts={setPaginatedProducts}
           />
         ) : (
-          <ProductGridView products={products} />
+          <ProductGridView
+            product={products}
+            paginatedProducts={paginatedProducts}
+            setProducts={setPaginatedProducts}
+          />
         )}
       </section>
     </div>

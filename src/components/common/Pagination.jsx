@@ -3,15 +3,16 @@ import { useState, useEffect } from "react";
 function Pagination({ items, setItems, itemsPerPage }) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const PagesCount = Math.ceil(items.length / itemsPerPage);
+  const PagesCount = Math.ceil((items?.length || 0) / itemsPerPage);
 
   useEffect(() => {
+    if (!items || items.length === 0) return; // این خط رو اضافه کن
+
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const paginatedItems = items.slice(startIndex, endIndex);
     setItems(paginatedItems);
-  }, [currentPage, items.length]);
-
+  }, [currentPage, items]);
   const changePage = (pageNumber) => setCurrentPage(pageNumber);
 
   return (

@@ -26,10 +26,13 @@ function RemoveProductIcon({ product, handler }) {
 
         <div className="space-y-2">
           <h3 className="text-white font-semibold text-base sm:text-lg">
-            Are you absolutely sure
-            <span className="inline-block px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 font-bold text-base sm:text-lg">
-              {product?.title} {""}?
+            <span
+              className="inline-block px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 font-bold text-base sm:text-lg"
+              dir="ltr"
+            >
+              {product?.title}?
             </span>
+            Are you absolutely sure
           </h3>
 
           <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
