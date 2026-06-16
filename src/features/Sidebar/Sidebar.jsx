@@ -16,7 +16,7 @@ function Sidebar({ open, setOpen }) {
         className={`
           fixed top-0 left-0
         h-screen
-        w-[260px] md:w-[250px]
+        w-[240px] md:w-[230px]
         bg-white border-r border-emerald-300
         flex flex-col
         z-[1000]
