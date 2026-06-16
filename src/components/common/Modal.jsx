@@ -12,24 +12,24 @@ function Modal({ Trigger, children, title, onSubmit }) {
 
       {isOpen && (
         <div
-          dir="ltr"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          dir="rtl"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="w-full max-w-[90%] sm:max-w-md bg-gray-900 rounded-2xl border border-gray-700"
+            className="w-full max-w-[95%] sm:max-w-lg md:max-w-xl lg:max-w-2xl bg-gray-900 rounded-2xl border border-gray-700 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center p-4 border-b border-gray-700">
-              <h2 className="text-lg sm:text-xl font-bold text-white">
+            <div className="flex justify-between items-center p-4 sm:p-5 border-b border-gray-700">
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-white">
                 {title}
               </h2>
-              <div
-                className="w-7 h-7 bg-gray-800 rounded-lg border border-gray-700 flex items-center justify-center cursor-pointer"
+              <button
                 onClick={() => setIsOpen(false)}
+                className="w-7 h-7 bg-gray-800 rounded-lg border border-gray-700 flex items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors"
               >
                 <svg
-                  className="w-4 h-4 text-gray-500"
+                  className="w-4 h-4 text-gray-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -41,10 +41,12 @@ function Modal({ Trigger, children, title, onSubmit }) {
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
-              </div>
+              </button>
             </div>
 
-            <div className="p-4">{children}</div>
+            <div className="p-4 sm:p-5 md:p-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
+              {children}
+            </div>
 
             <ModalFooter
               onSubmit={onSubmit}
