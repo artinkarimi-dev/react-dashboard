@@ -1,7 +1,13 @@
-
 import Filter from "./Filter";
 import Search from "./Search";
-function TableHeader({ header }) {
+
+function TableHeader({
+  header,
+  searchTerm,
+  setSearchTerm,
+  filters,
+  setFilters,
+}) {
   const { Buttons, title } = header;
 
   return (
@@ -13,8 +19,8 @@ function TableHeader({ header }) {
           <Buttons />
         ) : (
           <>
-            <Filter />
-            <Search />
+            <Filter filters={filters} setFilters={setFilters} />
+            <Search value={searchTerm} onChange={setSearchTerm} />
           </>
         )}
       </div>

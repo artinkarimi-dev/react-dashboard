@@ -4,16 +4,16 @@ import { useNavigate } from "react-router-dom";
 import ProductsTable from "../../features/ProductsTable/ProductsTable";
 import SectionTitle from "../../components/common/SectionTitle";
 import QuickOverview from "../../features/QuickOverview/QuickOverview";
-import { useState } from "react";
+import useToggle from "../../hooks/useToggle";
 
 function Home() {
-  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [isRedirecting, clickHandler] = useToggle();
+
   const navigate = useNavigate();
 
   const CTAButton = () => {
-    const clickHandler = () => {
-      setIsRedirecting(!isRedirecting);
-
+    const handleClick = () => {
+      clickHandler();
       setTimeout(() => {
         navigate("/products");
       }, 1500);
@@ -35,7 +35,7 @@ function Home() {
           text-sm sm:text-base
           w-full sm:w-auto
         "
-        onClick={clickHandler}
+        onClick={handleClick}
       >
         {isRedirecting ? (
           <>

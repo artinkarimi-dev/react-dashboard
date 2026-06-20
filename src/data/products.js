@@ -446,7 +446,7 @@ export const products = [
     },
 
     {
-        id: 46,
+        id: 46, 
         title: "iPhone 15 Pro Max",
         description: STATIC_DESCRIPTION,
         img: IMAGES.iphone,

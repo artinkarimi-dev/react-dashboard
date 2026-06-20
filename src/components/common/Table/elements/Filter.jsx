@@ -1,16 +1,129 @@
 import { FaFilter } from "react-icons/fa6";
+import Modal from "../../Modal";
+import { useState, useEffect } from "react";
 
-const Filter = () => {
+const Filter = ({ filters, setFilters }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [localFilters, setLocalFilters] = useState({
+    minPrice: "",
+    maxPrice: "",
+    status: "all",
+  });
+
+  const handleApply = () => {
+    setLocalFilters(filters);
+    setFilters?.(localFilters);
+    setIsModalOpen(false);
+  };
+
   return (
-    <button
-      dir="ltr"
-      className="group relative flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-xl shadow-sm transition-all duration-200 hover:shadow-md hover:border-gray-300 hover:text-gray-900 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 cursor-pointer overflow-hidden"
-    >
-      <FaFilter className="text-gray-500 group-hover:text-blue-500 transition-colors duration-200 text-[13px]" />
-      <span className="tracking-wide">Filter</span>
+    <>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="
+          flex items-center gap-2 px-4 py-2
+          bg-white text-gray-800
+          border border-gray-200
+          rounded-xl shadow-sm
+          hover:shadow-md hover:border-gray-300
+          hover:text-gray-900
+          transition-all duration-200
+          active:scale-95
+          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+        "
+      >
+        <FaFilter className="text-gray-500 text-sm" />
+        <span className="text-sm font-medium tracking-wide">Filter</span>
+      </button>
 
-      <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-    </button>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Product Filter"
+        onSubmit={handleApply}
+      >
+        <div className="space-y-6 text-white">
+          <div>
+            <label className="block text-sm text-gray-300 mb-2">
+              Min Price
+            </label>
+            <input
+              type="number"
+              value={localFilters.minPrice}
+              onChange={(e) =>
+                setLocalFilters({
+                  ...localFilters,
+                  minPrice: e.target.value,
+                })
+              }
+              placeholder="e.g. 100"
+              className="
+                w-full p-3
+                bg-gray-800 text-white
+                border border-gray-700
+                rounded-lg
+                focus:outline-none focus:ring-2 focus:ring-blue-500
+                focus:border-transparent
+                transition
+              "
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-gray-300 mb-2">
+              Max Price
+            </label>
+            <input
+              type="number"
+              value={localFilters.maxPrice}
+              onChange={(e) =>
+                setLocalFilters({
+                  ...localFilters,
+                  maxPrice: e.target.value,
+                })
+              }
+              placeholder="e.g. 1000"
+              className="
+                w-full p-3
+                bg-gray-800 text-white
+                border border-gray-700
+                rounded-lg
+                focus:outline-none focus:ring-2 focus:ring-blue-500
+                focus:border-transparent
+                transition
+              "
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-gray-300 mb-2">Status</label>
+            <select
+              value={localFilters.status}
+              onChange={(e) =>
+                setLocalFilters({
+                  ...localFilters,
+                  status: e.target.value,
+                })
+              }
+              className="
+                w-full p-3
+                bg-gray-800 text-white
+                border border-gray-700
+                rounded-lg
+                focus:outline-none focus:ring-2 focus:ring-blue-500
+                focus:border-transparent
+                transition
+              "
+            >
+              <option value="all">All</option>
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </select>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 };
 

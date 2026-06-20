@@ -1,58 +1,60 @@
-import { useState } from "react";
+import { useCallback } from "react";
 import ModalFooter from "./ModalFooter";
+import useToggle from "../../hooks/useToggle";
 
-function Modal({ Trigger, children, title, onSubmit }) {
-  const [isOpen, setIsOpen] = useState(false);
+function Modal({
+  Trigger,
+  children,
+  title,
+  onSubmit,
+  isOpen: externalIsOpen,
+  onClose: externalOnClose,
+}) {
+  const [internalIsOpen, toggle] = useToggle();
+
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
+
+  const onClose = externalOnClose || toggle;
+
+  const handleClose = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
+  const handleSubmit = useCallback(() => {
+    onSubmit?.();
+    onClose();
+  }, [onSubmit, onClose]);
+
+  const TriggerElement = Trigger ? (
+    <div onClick={toggle} className="cursor-pointer">
+      {Trigger}
+    </div>
+  ) : null;
 
   return (
     <>
-      <div onClick={() => setIsOpen(true)} className="cursor-pointer">
-        {Trigger}
-      </div>
+      {TriggerElement}
 
       {isOpen && (
         <div
-          dir="rtl"
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm"
-          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={handleClose}
         >
           <div
-            className="w-full max-w-[95%] sm:max-w-lg md:max-w-xl lg:max-w-2xl bg-gray-900 rounded-2xl border border-gray-700 shadow-2xl"
+            className="w-full max-w-2xl bg-gray-900 rounded-2xl border border-gray-700 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center p-4 sm:p-5 border-b border-gray-700">
-              <h2 className="text-base sm:text-lg md:text-xl font-bold text-white">
-                {title}
-              </h2>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="w-7 h-7 bg-gray-800 rounded-lg border border-gray-700 flex items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors"
-              >
-                <svg
-                  className="w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+            <div className="flex justify-between items-center p-4 border-b border-gray-700">
+              <h2 className="text-white font-bold text-lg">{title}</h2>
+
+              <button onClick={handleClose} className="text-gray-400">
+                ✕
               </button>
             </div>
 
-            <div className="p-4 sm:p-5 md:p-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
-              {children}
-            </div>
+            <div className="p-5 max-h-[70vh] overflow-y-auto">{children}</div>
 
-            <ModalFooter
-              onSubmit={onSubmit}
-              onClose={() => setIsOpen(false)}
-              falseButton={() => setIsOpen(false)}
-            />
+            <ModalFooter onSubmit={handleSubmit} onClose={handleClose} />
           </div>
         </div>
       )}

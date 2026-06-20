@@ -1,20 +1,20 @@
 import Modal from "../../../components/common/Modal";
 import { HiOutlineTrash, HiOutlineExclamation } from "react-icons/hi";
 
-const Trigger = () => (
-  <button className="cursor-pointer" aria-label="Delete product">
-    <HiOutlineTrash className="text-red-500 text-lg sm:text-xl" />
-  </button>
-);
-
 function RemoveProductIcon({ product, handler }) {
+  const TriggerButton = () => (
+    <button className="cursor-pointer" aria-label="Delete product">
+      <HiOutlineTrash className="text-red-500 text-lg sm:text-xl" />
+    </button>
+  );
+
   return (
     <Modal
       onSubmit={() => handler(product.id)}
       title="Delete Product"
-      Trigger={<Trigger />}
+      Trigger={<TriggerButton />}
     >
-      <div className="relative space-y-5 text-center">
+      <div dir="ltr" className="relative space-y-5 text-center">
         <div className="flex justify-center">
           <div className="relative">
             <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-20"></div>
@@ -26,20 +26,23 @@ function RemoveProductIcon({ product, handler }) {
 
         <div className="space-y-2">
           <h3 className="text-white font-semibold text-base sm:text-lg">
+            Are you absolutely sure
             <span
               className="inline-block px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 font-bold text-base sm:text-lg"
               dir="ltr"
             >
               {product?.title}?
             </span>
-            Are you absolutely sure
           </h3>
 
-          <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+          <p
+            dir="ltr"
+            className="text-gray-400 text-sm sm:text-base leading-relaxed"
+          >
             This action
             <span className="text-red-400 font-medium">cannot be undone</span>.
-            This will permanently delete the product and remove all of its data
-            from our servers.
+            This will permanently delete the product and <br /> remove all of
+            its data from our servers.
           </p>
         </div>
 
