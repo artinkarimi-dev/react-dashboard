@@ -26,7 +26,10 @@ function Users({ searchTerm, setSearchTerm, filters, setFilters }) {
       </div>
 
       <div dir="ltr" className="w-full">
-        <div className="hidden md:block rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div
+          className="w-full
+overflow-x-auto rounded-xl border border-gray-200 shadow-sm overflow-hidden"
+        >
           <Table
             header={{ title: "Users List" }}
             searchTerm={searchTerm}
@@ -34,7 +37,6 @@ function Users({ searchTerm, setSearchTerm, filters, setFilters }) {
             filters={filters}
             setFilters={setFilters}
           >
-        
             <TableHead>
               {usersTableHeader.map((cell, index) => (
                 <TableHeadCell key={index}>

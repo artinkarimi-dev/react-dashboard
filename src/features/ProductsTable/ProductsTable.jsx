@@ -80,7 +80,7 @@ function ProductsTable() {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+      <div className="px-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <h2 className="text-lg font-bold text-gray-900">Product List</h2>
         <Buttons />
       </div>

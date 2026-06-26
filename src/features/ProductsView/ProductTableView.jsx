@@ -37,91 +37,134 @@ function ProductTableView({
   return (
     <div dir="ltr" className="w-full">
       <div className="hidden md:block">
-        <Table
-          header={{ title: "Product List" }}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          filters={filters}
-          setFilters={setFilters}
-        >
-          <TableHead>
-            {ProductsAllTableHeaderRow.map((cell, index) => (
-              <TableHeadCell key={index}>{cell}</TableHeadCell>
-            ))}
-          </TableHead>
-          <TableBody>
-            {currentItems.map((product) => (
-              <TableRow
-                key={product.id}
-                className="group hover:bg-blue-50/40 transition-colors duration-150"
-              >
-                <TableCell>
-                  <span className="text-xs font-mono text-gray-400">
-                    #{product.id}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <span className="font-medium text-gray-800 text-sm leading-snug">
-                    {product.title}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center shadow-sm border border-gray-200">
-                    <img
-                      className="w-full h-full object-contain p-1"
-                      src={product.img}
-                      alt={product.title}
-                    />
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <span
-                    className={clsx(
-                      "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide",
-                      product.isPublished
-                        ? "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200"
-                        : "bg-rose-50 text-rose-500 ring-1 ring-rose-200",
-                    )}
-                  >
+        <div className="w-full overflow-x-auto">
+          <Table
+            header={{ title: "Product List" }}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            filters={filters}
+            setFilters={setFilters}
+          >
+            <TableHead>
+              {ProductsAllTableHeaderRow.map((cell, index) => (
+                <TableHeadCell key={index}>{cell}</TableHeadCell>
+              ))}
+            </TableHead>
+
+            <TableBody>
+              {currentItems.map((product) => (
+                <TableRow
+                  key={product.id}
+                  className="hover:bg-blue-50/40 transition-colors duration-150"
+                >
+                  <TableCell>#{product.id}</TableCell>
+
+                  <TableCell>{product.title}</TableCell>
+
+                  <TableCell>
+                    <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100">
+                      <img
+                        src={product.img}
+                        alt={product.title}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  </TableCell>
+
+                  <TableCell>
                     <span
-                      className={getStatusIndicatorClass(product.isPublished)}
-                    />
-                    {product.isPublished ? "Public" : "Private"}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <span className="font-bold text-gray-900 text-sm">
+                      className={clsx(
+                        "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold",
+                        product.isPublished
+                          ? "bg-emerald-50 text-emerald-600"
+                          : "bg-rose-50 text-rose-500",
+                      )}
+                    >
+                      <span
+                        className={getStatusIndicatorClass(product.isPublished)}
+                      />
+                      {product.isPublished ? "Public" : "Private"}
+                    </span>
+                  </TableCell>
+
+                  <TableCell>
                     {new Intl.NumberFormat("en-US", {
                       style: "currency",
                       currency: "USD",
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
                     }).format(product.price)}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <span
-                    className={clsx(
-                      "text-sm font-semibold",
-                      product.stock > 50
-                        ? "text-gray-700"
-                        : product.stock > 10
-                          ? "text-amber-600"
-                          : "text-red-500",
-                    )}
-                  >
-                    {product.stock}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-2 text-blue-900 font-medium">
-                    Actions
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+                  </TableCell>
+
+                  <TableCell>
+                    <span
+                      className={clsx(
+                        product.stock > 50
+                          ? "text-gray-700"
+                          : product.stock > 10
+                            ? "text-amber-600"
+                            : "text-red-500",
+                      )}
+                    >
+                      {product.stock}
+                    </span>
+                  </TableCell>
+
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+
+          <Pagination
+            totalItems={totalItems}
+            itemsPerPage={ITEMS_PER_PAGE}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      </div>
+
+      <div className="md:hidden space-y-4">
+        {currentItems.map((product) => (
+          <div
+            key={product.id}
+            className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm"
+          >
+            <div className="flex items-center gap-3">
+              <img
+                src={product.img}
+                className="w-14 h-14 rounded-lg object-contain bg-gray-100"
+              />
+              <div>
+                <p className="font-semibold">{product.title}</p>
+                <p className="text-xs text-gray-400">#{product.id}</p>
+              </div>
+            </div>
+
+            <div className="flex justify-between mt-3">
+              <span
+                className={clsx(
+                  product.isPublished ? "text-emerald-600" : "text-rose-500",
+                )}
+              >
+                {product.isPublished ? "Public" : "Private"}
+              </span>
+
+              <span className="font-bold">
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(product.price)}
+              </span>
+            </div>
+
+            <div className="mt-2 text-sm text-gray-500">
+              Stock: {product.stock}
+            </div>
+
+            <div className="mt-3 text-blue-600 font-medium">Actions</div>
+          </div>
+        ))}
+
         <Pagination
           totalItems={totalItems}
           itemsPerPage={ITEMS_PER_PAGE}
