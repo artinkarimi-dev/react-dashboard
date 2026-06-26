@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { CiGrid41, CiViewTable } from "react-icons/ci";
 import { products } from "../../data/products";
+import useProducts from "../../hooks/useProducts";
 import SectionTitle from "../../components/common/SectionTitle";
 import ProductTableView from "../../features/ProductsView/ProductTableView";
 import ProductGridView from "../../features/ProductsView/ProductGridView";
@@ -23,10 +24,7 @@ function Products() {
   const [layoutType, changeLayout] = useLocalStorage();
   const [newProduct, setNewProduct] = useState(() => ({ ...defaultProduct }));
 
-  const [allProducts, setAllProducts] = useState(() => {
-    const saved = localStorage.getItem("products");
-    return saved ? JSON.parse(saved) : products;
-  });
+  const { allProducts, setAllProducts } = useProducts();
 
   const {
     searchTerm,

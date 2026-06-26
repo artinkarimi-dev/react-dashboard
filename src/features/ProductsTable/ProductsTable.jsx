@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { IoIosLink } from "react-icons/io";
 import { CiGrid41, CiViewTable } from "react-icons/ci";
 import getStatusIndicatorClass from "../../utils/product-status";
+import useProducts from "../../hooks/useProducts";
 import RemoveProductIcon from "./components/RemoveProductIcon";
 import ChangeVisibilityIcon from "./components/ChangeVisibilityIcon";
 import EditProductIcon from "./components/EditProductIcon";
@@ -13,7 +14,7 @@ import Pagination from "../../components/common/Pagination";
 const ITEMS_PER_PAGE = 4;
 
 function ProductsTable() {
-  const [allProducts, setAllProducts] = useState([...products]);
+  const { allProducts, setAllProducts } = useProducts();
   const [currentPage, setCurrentPage] = useState(1);
   const [layoutType, setLayoutType] = useState("TABLE");
 
@@ -146,7 +147,6 @@ function ProductsTable() {
           ))}
         </div>
       ) : (
-        /* جدول دسکتاپ */
         <div className="hidden sm:block">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
