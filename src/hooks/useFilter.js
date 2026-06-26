@@ -8,14 +8,14 @@ const useFilter = (data) => {
     });
 
     const filteredData = useMemo(() => {
-        if (!data || !Array.isArray(data)) return [];
+        if (!Array.isArray(data)) return [];
+
+        const minPrice = parseFloat(filters.minPrice);
+        const maxPrice = parseFloat(filters.maxPrice);
 
         return data.filter((item) => {
-            const minPrice = parseFloat(filters.minPrice);
-            const maxPrice = parseFloat(filters.maxPrice);
-
-            if (!isNaN(minPrice) && item.price < minPrice) return false;
-            if (!isNaN(maxPrice) && item.price > maxPrice) return false;
+            if (!isNaN(minPrice) && Number(item.price) < minPrice) return false;
+            if (!isNaN(maxPrice) && Number(item.price) > maxPrice) return false;
 
             if (filters.status === "published" && !item.isPublished) return false;
             if (filters.status === "draft" && item.isPublished) return false;

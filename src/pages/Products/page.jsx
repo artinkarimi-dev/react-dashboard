@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { CiGrid41, CiViewTable } from "react-icons/ci";
 import { products } from "../../data/products";
 import SectionTitle from "../../components/common/SectionTitle";
@@ -8,6 +8,7 @@ import AddProductFields from "../../features/ProductsTable/components/AddProduct
 import Modal from "../../components/common/Modal";
 import useSearchFilter from "../../hooks/useSearchFilter";
 import useFilter from "../../hooks/useFilter";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const defaultProduct = {
   title: "",
@@ -19,9 +20,13 @@ const defaultProduct = {
 };
 
 function Products() {
-  const [layoutType, setLayoutType] = useState("TABLE");
-  const [allProducts, setAllProducts] = useState(() => [...products]);
+  const [layoutType, changeLayout] = useLocalStorage();
   const [newProduct, setNewProduct] = useState(() => ({ ...defaultProduct }));
+
+  const [allProducts, setAllProducts] = useState(() => {
+    const saved = localStorage.getItem("products");
+    return saved ? JSON.parse(saved) : products;
+  });
 
   const {
     searchTerm,
@@ -42,13 +47,15 @@ function Products() {
     setNewProduct({ ...defaultProduct });
   }, [allProducts, newProduct]);
 
+  useEffect(() => {
+    localStorage.setItem("products", JSON.stringify(allProducts));
+  }, [allProducts]);
+
   const Buttons = useMemo(
     () => (
       <>
         <button
-          onClick={() =>
-            setLayoutType((p) => (p === "TABLE" ? "GRID" : "TABLE"))
-          }
+          onClick={changeLayout}
           className="p-2.5 rounded-xl backdrop-blur-md bg-white/20 shadow-sm text-gray-700 hover:bg-white/30 hover:shadow-md transition-all duration-200 cursor-pointer active:scale-95"
           aria-label="Toggle layout"
         >
@@ -72,7 +79,7 @@ function Products() {
         </Modal>
       </>
     ),
-    [layoutType, createNewProduct, newProduct],
+    [changeLayout, createNewProduct, newProduct],
   );
 
   return (
