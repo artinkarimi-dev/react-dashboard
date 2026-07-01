@@ -1,6 +1,6 @@
 import { FaFilter } from "react-icons/fa6";
 import Modal from "../../Modal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const Filter = ({ filters, setFilters }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

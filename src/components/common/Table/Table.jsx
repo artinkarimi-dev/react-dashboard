@@ -8,6 +8,7 @@ function Table({
   setSearchTerm,
   filters,
   setFilters,
+  showFilter = true,
   pagination: { items, setItems, itemsPerPage } = {
     items: null,
     setItems: null,
@@ -18,6 +19,7 @@ function Table({
     <>
       <div className="bg-white border border-slate-300 shadow-sm rounded-xl p-4 mt-10 overflow-hidden transition-shadow hover:shadow-md">
         <TableHeader
+          showFilter={showFilter}
           header={header}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

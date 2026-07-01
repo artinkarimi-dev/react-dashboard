@@ -7,6 +7,7 @@ function TableHeader({
   setSearchTerm,
   filters,
   setFilters,
+  showFilter,
 }) {
   const { Buttons, title } = header;
 
@@ -19,7 +20,8 @@ function TableHeader({
           <Buttons />
         ) : (
           <>
-            <Filter filters={filters} setFilters={setFilters} />
+            {showFilter && <Filter filters={filters} setFilters={setFilters} />}
+
             <Search value={searchTerm} onChange={setSearchTerm} />
           </>
         )}

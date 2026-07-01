@@ -7,17 +7,24 @@ import TableHeadCell from "../../components/common/Table/elements/TableHeadCell"
 import TableRow from "../../components/common/Table/elements/TableRow";
 import Table from "../../components/common/Table/Table";
 import SectionTitle from "../../components/common/SectionTitle";
+import useSearchFilter from "../../hooks/useSearchFilter";
 
-function Users({ searchTerm, setSearchTerm, filters, setFilters }) {
+function Users({ filters, setFilters }) {
+  const {
+    searchTerm,
+    setSearchTerm,
+    filteredData: filteredUsers,
+  } = useSearchFilter(users, ["fullName", "userName", "email"]);
+
   const usersTableHeader = ["ID", "User", "Email", "Role", "Phone"];
 
   const ITEMS_PER_PAGE = 7;
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
-  const currentUsers = users.slice(startIndex, endIndex);
+  const currentUsers = filteredUsers.slice(startIndex, endIndex);
 
   return (
     <div>
@@ -26,16 +33,14 @@ function Users({ searchTerm, setSearchTerm, filters, setFilters }) {
       </div>
 
       <div dir="ltr" className="w-full">
-        <div
-          className="w-full
-overflow-x-auto rounded-xl border border-gray-200 shadow-sm overflow-hidden"
-        >
+        <div>
           <Table
             header={{ title: "Users List" }}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             filters={filters}
             setFilters={setFilters}
+            showFilter={false}
           >
             <TableHead>
               {usersTableHeader.map((cell, index) => (

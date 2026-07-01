@@ -4,7 +4,7 @@ const useLocalStorage = () => {
   const getDefaultLayout = () => {
     const defaultLayout = localStorage.getItem("layout");
     return defaultLayout ? defaultLayout : "TABLE";
-  };
+  }; 
 
   const [state, setState] = useState(getDefaultLayout);
 
