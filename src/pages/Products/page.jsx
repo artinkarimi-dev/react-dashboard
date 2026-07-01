@@ -10,6 +10,7 @@ import Modal from "../../components/common/Modal";
 import useSearchFilter from "../../hooks/useSearchFilter";
 import useFilter from "../../hooks/useFilter";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import CreateButton from "../../components/common/CreateButton";
 
 const defaultProduct = {
   title: "",
@@ -66,11 +67,7 @@ function Products() {
 
         <Modal
           title="Create a new product"
-          Trigger={
-            <button className="font-sans bg-gradient-to-b from-green-400 to-green-800 text-white px-4 py-2 rounded-md hover:from-green-800 hover:to-green-400 transition duration-300 ease-in-out flex items-center gap-2 w-full sm:w-auto justify-center cursor-pointer">
-              Product creation
-            </button>
-          }
+          Trigger={<CreateButton>Create Product</CreateButton>}
           onSubmit={createNewProduct}
         >
           <AddProductFields newProduct={newProduct} onChange={setNewProduct} />
